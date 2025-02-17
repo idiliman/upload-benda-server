@@ -9,7 +9,8 @@ app.use("*", logger());
 
 const apiRoutes = app.basePath("/api").route("/f", f);
 
-app.get("*", serveStatic({ path: "./src/index.html" }));
+app.get("*", serveStatic({ path: "./frontend/dist" }));
+app.get("*", serveStatic({ path: "./frontend/dist/index.html" }));
 
 export default app;
 export type ApiRoutes = typeof apiRoutes;
