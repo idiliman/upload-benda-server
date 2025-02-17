@@ -33,7 +33,7 @@ export const f = new Hono()
     const fileName = c.req.param("fileName");
     const metadata = s3Client.presign(fileName, {
       // Seconds
-      expiresIn: 10,
+      //   expiresIn: 10,
       acl: "public-read",
       method: "GET",
     });
