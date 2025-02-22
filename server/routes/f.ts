@@ -31,7 +31,7 @@ export const f = new Hono()
 
       await s3Client.write(uniqueFileName, buffer);
 
-      return c.json({ fileName: uniqueFileName });
+      return c.json({ success: true, data: uniqueFileName });
     }
   })
   .get("/:fileName", async (c) => {
