@@ -7,10 +7,10 @@ import os from "os";
 const app = new Hono();
 
 app.use("*", async (c, next) => {
-  // Add server hostname/IP to the response
-  c.res.headers.set("X-Handled-By", os.hostname());
+  console.log(`Request handled by: ${os.hostname()}`);
   await next();
 });
+
 app.use("*", logger());
 
 const apiRoutes = app.basePath("/api").route("/f", f);

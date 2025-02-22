@@ -13,7 +13,6 @@ export const f = new Hono()
         {
           success: false,
           message: "Invalid or empty file",
-          data: { server: c.req.header("X-Handled-By") },
         },
         400
       );
@@ -39,7 +38,7 @@ export const f = new Hono()
 
       return c.json({
         success: true,
-        data: { uniqueFileName, server: c.req.header("X-Handled-By") },
+        data: uniqueFileName,
       });
     }
   })
