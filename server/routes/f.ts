@@ -1,6 +1,7 @@
 import { Hono } from "hono";
 import s3Client from "../../lib/s3";
 import sharp from "sharp";
+import os from "os";
 
 export const f = new Hono()
   .post("/upload", async (c) => {
@@ -13,6 +14,7 @@ export const f = new Hono()
         {
           success: false,
           message: "Invalid or empty file",
+          server: os.hostname(),
         },
         400
       );
@@ -39,6 +41,7 @@ export const f = new Hono()
       return c.json({
         success: true,
         data: uniqueFileName,
+        server: os.hostname(),
       });
     }
   })
