@@ -9,9 +9,15 @@ export const f = new Hono()
     const file = body["file"];
 
     if (!file || !(file instanceof File) || file.size === 0) {
-      return c.json({ success: false, message: "Invalid or empty file" }, 400);
+      return c.json(
+        {
+          success: false,
+          message: "Invalid or empty file",
+          data: { server: c.req.header("X-Handled-By") },
+        },
+        400
+      );
     }
-
     if (file instanceof File) {
       const uniqueFileName = `${crypto.randomUUID()}-${file.name}`;
 
@@ -31,7 +37,10 @@ export const f = new Hono()
 
       await s3Client.write(uniqueFileName, buffer);
 
-      return c.json({ success: true, data: uniqueFileName });
+      return c.json({
+        success: true,
+        data: { uniqueFileName, server: c.req.header("X-Handled-By") },
+      });
     }
   })
   .get("/:fileName", async (c) => {
