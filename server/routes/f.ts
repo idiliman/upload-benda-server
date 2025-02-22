@@ -5,7 +5,12 @@ import sharp from "sharp";
 export const f = new Hono()
   .post("/upload", async (c) => {
     const body = await c.req.parseBody();
+
     const file = body["file"];
+
+    if (!file || !(file instanceof File) || file.size === 0) {
+      return c.json({ success: false, message: "Invalid or empty file" }, 400);
+    }
 
     if (file instanceof File) {
       const uniqueFileName = `${crypto.randomUUID()}-${file.name}`;
